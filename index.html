@@ -16,10 +16,37 @@
     <div id="camera" style="width:100%">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js" integrity="sha512-bCsBoYoW6zE0aja5xcIyoCDPfT27+cGr7AOCqelttLVRGay6EKGQbR6wm6SUcUGOMGXJpj+jrIpMS6i80+kZPw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     </div>
+    <div>
+        <button onclick="callGoogleBooks(9781517159399)">Debugton</button>
+    </div>
+    <div>
+        <button onclick="startQuagga()">Try Again</button>
+    </div>
 </body>
 </html>
 
 <script>
+    async function callGoogleBooks(isbn) {
+        const key = '&key=AIzaSyDMil7GQhRO_Pt3bIbtTHL3mZ5FF9uOYus'
+        const apiUrl = 'https://www.googleapis.com/books/v1/volumes?q=isbn:' + isbn + key
+        console.log(apiUrl);
+
+        const response = await fetch(apiUrl);
+        const book = await response.json();
+        console.log(book)
+        console.log(book.items[0].volumeInfo.title)
+        alert("This looks like... " + book.items[0].volumeInfo.title)
+    }
+
+    function startQuagga() {
+        Quagga.init(quaggaConf, function(err) {
+        if (err) {
+            return console.log(err);
+        }
+        Quagga.start();
+    });
+    };
+
     const quaggaConf = {
         inputStream: {
             target: document.querySelector("#camera"),
@@ -32,7 +59,13 @@
             }
         },
         decoder: {
-            readers: ['ean_reader']
+            readers: ['ean_reader'],
+            debug: {
+                drawBoundingBox: true,
+                showFrequency: true,
+                drawScanline: true,
+                showPattern: true
+            }
         },
     }
 
@@ -44,6 +77,7 @@
     });
 
     Quagga.onDetected(function (result) {
-        alert("Detected Barcode: " + result.codeResult.code);
+        Quagga.stop();
+        callGoogleBooks(result.codeResult.code)
     });
 </script>
