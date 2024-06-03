@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>ISBN Scan</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+    <style>
+        #camera video{
+            width: 100%;
+            max-width: 640px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="camera" style="width:100%">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js" integrity="sha512-bCsBoYoW6zE0aja5xcIyoCDPfT27+cGr7AOCqelttLVRGay6EKGQbR6wm6SUcUGOMGXJpj+jrIpMS6i80+kZPw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    </div>
+</body>
+</html>
+
+<script>
+    const quaggaConf = {
+        inputStream: {
+            target: document.querySelector("#camera"),
+            type: "LiveStream",
+            constraints: {
+                width: { min: 640 },
+                height: { min: 480 },
+                facingMode: "environment",
+                aspectRatio: { min: 1, max: 2 }
+            }
+        },
+        decoder: {
+            readers: ['ean_reader']
+        },
+    }
+
+    Quagga.init(quaggaConf, function(err) {
+        if (err) {
+            return console.log(err);
+        }
+        Quagga.start();
+    });
+
+    Quagga.onDetected(function (result) {
+        alert("Detected Barcode: " + result.codeResult.code);
+    });
+</script>
