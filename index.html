@@ -22,6 +22,20 @@
     <div>
         <button onclick="startQuagga()">Try Again</button>
     </div>
+    <div id="bookInfo" hidden>
+        <p id="currentBook"></p>
+        <a id="currentBookLink" target="_blank" rel="no-referrer">GoogleBooks Link</a>
+    </div>
+    <div id="bookButtons" hidden>
+        <p>Is this your book?</p>
+        <button onclick="addBook()">Yes</button>
+        <button onclick="startQuagga()">No</button>
+    </div>
+    <div id="dumbWayToStoreABook" hidden>
+        <div id="title"></div>
+        <div id="isbn"></div>
+        <div id="canonicalVolumeLink"></div>
+    </div>
 </body>
 </html>
 
@@ -34,11 +48,53 @@
         const response = await fetch(apiUrl);
         const book = await response.json();
         console.log(book)
-        console.log(book.items[0].volumeInfo.title)
-        alert("This looks like... " + book.items[0].volumeInfo.title)
+        if(book.totalItems == 0) {
+            startQuagga()
+        }
+        else {
+            setBookData(book.items[0].volumeInfo.title, isbn, book.items[0].volumeInfo.canonicalVolumeLink)
+            document.getElementById("bookInfo").hidden = false
+            document.getElementById("currentBook").innerText = "Title: " + book.items[0].volumeInfo.title
+            document.getElementById("currentBookLink").href = book.items[0].volumeInfo.canonicalVolumeLink
+            document.getElementById("bookButtons").hidden = false
+        }
+    }
+
+    function setBookData(title, isbn, canonicalVolumeLink) {
+        document.getElementById("title").innerText = title
+        document.getElementById("isbn").innerText = isbn
+        document.getElementById("canonicalVolumeLink").innerText = canonicalVolumeLink
+    }
+
+    function addBook() {
+        var title = document.getElementById("title").innerText
+        var isbn = document.getElementById("isbn").innerText
+        var canonicalVolumeLink = document.getElementById("canonicalVolumeLink").innerText
+        var books = JSON.parse(localStorage.getItem('bookList')) || [];
+        var newBook = {title: title, isbn: isbn, canonicalVolumeLink: canonicalVolumeLink}
+
+        books.push(newBook)
+
+        localStorage.setItem('bookList', JSON.stringify(books));
+    }
+
+    function getBookList() {
+        return Json.parse(localStorage.getItem('bookList'))
+    }
+
+    function cleanResultCode(code) {
+        if (code.substr(0, 3) === "978") {
+            return code.substr(0, 13)
+        }
+        else {
+            return code.substr(0, 10)
+        }
     }
 
     function startQuagga() {
+        document.getElementById("bookInfo").hidden = true
+        document.getElementById("bookButtons").hidden = true
+
         Quagga.init(quaggaConf, function(err) {
         if (err) {
             return console.log(err);
@@ -78,6 +134,7 @@
 
     Quagga.onDetected(function (result) {
         Quagga.stop();
-        callGoogleBooks(result.codeResult.code)
+        cleanCode = cleanResultCode(result.codeResult.code)
+        callGoogleBooks(cleanCode)
     });
 </script>
