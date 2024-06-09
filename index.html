@@ -36,10 +36,16 @@
         <div id="isbn"></div>
         <div id="canonicalVolumeLink"></div>
     </div>
+    <div>
+        <p>Book Shelf</p>
+        <ul id="bookList"></ul>
+    </div>
 </body>
 </html>
 
 <script>
+    let sharedBook = {};
+
     async function callGoogleBooks(isbn) {
         const key = '&key=AIzaSyDMil7GQhRO_Pt3bIbtTHL3mZ5FF9uOYus'
         const apiUrl = 'https://www.googleapis.com/books/v1/volumes?q=isbn:' + isbn + key
@@ -70,12 +76,14 @@
         var title = document.getElementById("title").innerText
         var isbn = document.getElementById("isbn").innerText
         var canonicalVolumeLink = document.getElementById("canonicalVolumeLink").innerText
+
         var books = JSON.parse(localStorage.getItem('bookList')) || [];
         var newBook = {title: title, isbn: isbn, canonicalVolumeLink: canonicalVolumeLink}
 
         books.push(newBook)
 
         localStorage.setItem('bookList', JSON.stringify(books));
+        alert("Added Book to Shelf!")
     }
 
     function getBookList() {
