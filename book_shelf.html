@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Book Shelf</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" /> 
+</head>
+
+<body onload="getBookShelf()">
+    <div>
+        <a href="index.html"><- Back to Scan</a>
+        <p>Book Shelf</p>
+        <ul id="bookShelf">
+            <!--BookShelf Contents-->
+        </ul>
+        <button onclick="clearBookList()">Clear Book List</button>
+    </div>
+</body>
+
+</html>
+
+<script>
+
+    function clearBookShelf() {
+        localStorage.removeItem('bookList');
+    }
+
+    function getBookShelf() {
+        list = JSON.parse(localStorage.getItem('bookList'))
+        ul = document.getElementById("bookShelf")
+
+        list.forEach(book => {
+            let a = document.createElement('a')
+            a.href = book.items[0].volumeInfo.canonicalVolumeLink
+            a.target = '_blank'
+            a.innerHTML = book.items[0].volumeInfo.title
+
+            let li = document.createElement('li')
+            li.appendChild(a)
+
+            ul.appendChild(li)   
+        });
+    }
+</script>
