@@ -3,6 +3,7 @@
 
 <head>
     <script src="js/isbn.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/ramda@0.30.0/dist/ramda.min.js"></script>
     <link rel="stylesheet" href="css/style.css">
     <meta charset="utf-8" />
     <title>ISBN Scan</title>
@@ -63,12 +64,14 @@
     function addBook() {
         var books = JSON.parse(localStorage.getItem('bookList')) || [];
 
-        //TODO: Check if sharedBook too
-        books.push(sharedBook)
-
-        localStorage.setItem('bookList', JSON.stringify(books));
-
-        alert("Added Book to Shelf!")
+        if (R.isEmpty(sharedBook)) {
+            books.push(sharedBook)
+            localStorage.setItem('bookList', JSON.stringify(books));
+            alert("Added Book to Shelf!")
+        }
+        else {
+            alert("There isn't a book yet, scan one!")
+        }
     }
 
 
