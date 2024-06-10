@@ -64,7 +64,7 @@
     function addBook() {
         var books = JSON.parse(localStorage.getItem('bookList')) || [];
 
-        if (R.isEmpty(sharedBook)) {
+        if (R.isNotEmpty(sharedBook)) {
             books.push(sharedBook)
             localStorage.setItem('bookList', JSON.stringify(books));
             alert("Added Book to Shelf!")
