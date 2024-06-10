@@ -3,18 +3,19 @@
 
 <head>
     <meta charset="utf-8" />
+    <link rel="stylesheet" href="css/style.css">
     <title>Book Shelf</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" /> 
 </head>
 
 <body onload="getBookShelf()">
+    <button class="nav-button" role="button" onclick="window.location.href='index.html';">Back to Scan</button>
     <div>
-        <a href="index.html"><- Back to Scan</a>
-        <p>Book Shelf</p>
+        <div>Book Shelf</div>
         <ul id="bookShelf">
             <!--BookShelf Contents-->
         </ul>
-        <button onclick="clearBookList()">Clear Book List</button>
+        <button class="btn-no" onclick="clearBookList()">Clear Book List</button>
     </div>
 </body>
 
