@@ -52,9 +52,9 @@
         else {
             sharedBook = book
             document.getElementById("currentBookTitle").innerText = "Title: " + book.items[0].volumeInfo.title
-            // document.getElementById("curentBookAuthor").innerText = "Author: " + book.items[0].volumeInfo.authors[0]
+            document.getElementById("currentBookAuthor").innerText = "Author: " + book.items[0].volumeInfo.authors[0]
             link = document.getElementById("currentBookLink")
-            link.href = book.items[0].selfLink
+            link.href = book.items[0].volumeInfo.canonicalVolumeLink
             link.innerText = "Link to " + book.items[0].volumeInfo.title
         }
     }
@@ -73,7 +73,6 @@
 
 
     function startQuagga() {
-
         Quagga.init(quaggaConf, function (err) {
             if (err) {
                 return console.log(err);
