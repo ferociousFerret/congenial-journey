@@ -52,8 +52,10 @@
         else {
             sharedBook = book
             document.getElementById("currentBookTitle").innerText = "Title: " + book.items[0].volumeInfo.title
-            document.getElementById("curentBookAuthor").innerText = "Author: " + book.items[0].authors[0]
-            document.getElementById("currentBookLink").href = book.items[0].selfLink
+            document.getElementById("curentBookAuthor").innerText = "Author: " + book.items[0].volumeInfo.authors[0]
+            link = document.getElementById("currentBookLink")
+            link.href = book.items[0].selfLink
+            link.innerText = "Link to " + book.items[0].volumeInfo.title
         }
     }
 
