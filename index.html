@@ -10,7 +10,10 @@
 </head>
 
 <body>
-    <button class="nav-button" role="button" onclick="window.location.href='book_shelf.html';">Go To Your Shelf</button>
+    <div id="power-buttons">
+        <button id="shelf-btn" class="nav-button" role="button" onclick="window.location.href='book_shelf.html';">Go To Your Shelf</button>
+        <button id="quagga-btn" class="btn-yes" role="button" onclick="startQuagga">Scan Another Book</button>
+    </div>
     <div id="camera">
         <script src="https://cdn.jsdelivr.net/npm/@ericblade/quagga2/dist/quagga.min.js"></script>
     </div>
@@ -18,7 +21,7 @@
         <div id="bookInfo">
             <div id="currentBookTitle"></div>
             <div id="currentBookAuthor"></div>
-            <a id="currentBookLink" target="_blank" rel="no-referrer">Link to GoogleBooks Entry</a>
+            <a id="currentBookLink" target="_blank" rel="no-referrer"></a>
         </div>
         <div>
             <div>Add Book to Shelf?</div>
@@ -35,6 +38,7 @@
 <script>
     let sharedBook = {};
 
+    //TODO: Call the Lite version instead. That's all the data needed
     async function callGoogleBooks(isbn) {
         const key = '&key=AIzaSyDMil7GQhRO_Pt3bIbtTHL3mZ5FF9uOYus'
         const apiUrl = 'https://www.googleapis.com/books/v1/volumes?q=isbn:' + isbn + key
@@ -47,26 +51,27 @@
         }
         else {
             sharedBook = book
-            document.getElementById("bookInfo").hidden = false
             document.getElementById("currentBookTitle").innerText = "Title: " + book.items[0].volumeInfo.title
             document.getElementById("curentBookAuthor").innerText = "Author: " + book.items[0].authors[0]
             document.getElementById("currentBookLink").href = book.items[0].selfLink
-            document.getElementById("bookButtons").hidden = false
         }
     }
 
-    // Allows duplicates 
+    //TODO: Warn on duplicate
     function addBook() {
         var books = JSON.parse(localStorage.getItem('bookList')) || [];
 
+        //TODO: Check if sharedBook too
         books.push(sharedBook)
 
         localStorage.setItem('bookList', JSON.stringify(books));
+
         alert("Added Book to Shelf!")
     }
 
 
     function startQuagga() {
+
         Quagga.init(quaggaConf, function (err) {
             if (err) {
                 return console.log(err);

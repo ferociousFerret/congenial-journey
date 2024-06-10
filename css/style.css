@@ -54,7 +54,17 @@ canvas.drawing, canvas.drawingBuffer {
     }
 }
 
+#power-buttons {
+    display: flex;
+    flex-direction: row;
 
+    #shelf-btn {
+        display: flex;
+    }
+    #quagga-btn {
+        display: flex;
+    }
+}
 
 .btn-yes {
     display: flex;
