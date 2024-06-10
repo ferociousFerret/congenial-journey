@@ -10,19 +10,22 @@
 </head>
 
 <body>
-    <a class="nav-link" href="book_shelf.html">Go To Your Shelf</a>
+    <button class="nav-button" role="button" onclick="window.location.href='book_shelf.html';">Go To Your Shelf</button>
     <div id="camera">
         <script src="https://cdn.jsdelivr.net/npm/@ericblade/quagga2/dist/quagga.min.js"></script>
     </div>
     <div id="control">
         <div id="bookInfo">
-            <p id="currentBook">Placeholder</p>
-            <a id="currentBookLink" target="_blank" rel="no-referrer">GoogleBooks Link</a>
+            <div id="currentBookTitle"></div>
+            <div id="currentBookAuthor"></div>
+            <a id="currentBookLink" target="_blank" rel="no-referrer">Link to GoogleBooks Entry</a>
         </div>
-        <div id="bookButtons">
-            <p>Add this book to shelf?</p>
-            <button onclick="addBook()">Yes</button>
-            <button onclick="startQuagga()">No</button>
+        <div>
+            <div>Add Book to Shelf?</div>
+            <div id="bookButtons">
+                <button class="btn-yes" onclick="addBook()">Yes</button>
+                <button class="btn-no" onclick="startQuagga()">No</button>
+            </div>
         </div>
     </div>
 </body>
@@ -35,19 +38,19 @@
     async function callGoogleBooks(isbn) {
         const key = '&key=AIzaSyDMil7GQhRO_Pt3bIbtTHL3mZ5FF9uOYus'
         const apiUrl = 'https://www.googleapis.com/books/v1/volumes?q=isbn:' + isbn + key
-        console.log(apiUrl);
 
         const response = await fetch(apiUrl);
         const book = await response.json();
-        console.log(book)
+
         if (book.totalItems == 0) {
             startQuagga()
         }
         else {
             sharedBook = book
             document.getElementById("bookInfo").hidden = false
-            document.getElementById("currentBook").innerText = "Title: " + book.items[0].volumeInfo.title
-            document.getElementById("currentBookLink").href = book.items[0].volumeInfo.canonicalVolumeLink
+            document.getElementById("currentBookTitle").innerText = "Title: " + book.items[0].volumeInfo.title
+            document.getElementById("curentBookAuthor").innerText = "Author: " + book.items[0].authors[0]
+            document.getElementById("currentBookLink").href = book.items[0].selfLink
             document.getElementById("bookButtons").hidden = false
         }
     }
@@ -102,7 +105,7 @@
 
         if (isValidIsbn(cleanCode)) {
             callGoogleBooks(cleanCode)
-\        }
+        }
         else {
             startQuagga()
         }

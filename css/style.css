@@ -16,6 +16,89 @@ canvas.drawing, canvas.drawingBuffer {
     left: 0;
 }
 
+/* CSS */
+.nav-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6px 14px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+  border-radius: 6px;
+  border: none;
+  margin-bottom: 5px;
+
+  color: #fff;
+  background: linear-gradient(180deg, #4B91F7 0%, #367AF6 100%);
+   background-origin: border-box;
+  box-shadow: 0px 0.5px 1.5px rgba(54, 122, 246, 0.25), inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+#control {
+    display: flex;
+    flex-direction: column;
+
+    #bookInfo {
+        display: flex;
+        flex-direction: column;
+        margin-top: 20px;
+        margin-bottom: 15px;
+    }
+
+    #bookButtons {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+}
+
+
+
+.btn-yes {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 6px 14px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+    border-radius: 6px;
+    border: none;
+    margin: 5px;
+  
+    color: #fff;
+    background: linear-gradient(180deg, #005AB5 0%, #005AB5 100%);
+     background-origin: border-box;
+    box-shadow: 0px 0.5px 1.5px rgba(54, 122, 246, 0.25), inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.btn-no {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 6px 14px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+    border-radius: 6px;
+    border: none;
+    margin: 5px;
+  
+    color: #fff;
+    background: linear-gradient(180deg, #DC3220 0%, #DC3220 100%);
+     background-origin: border-box;
+    box-shadow: 0px 0.5px 1.5px rgba(54, 122, 246, 0.25), inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+  }
+
+.nav-button:focus {
+  box-shadow: inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2), 0px 0.5px 1.5px rgba(54, 122, 246, 0.25), 0px 0px 0px 3.5px rgba(58, 108, 217, 0.5);
+  outline: 0;
+}
+
 .nav-link {
     color: #0f7afc;
     border-bottom-color: rgba(15, 122, 252, 0.2);
